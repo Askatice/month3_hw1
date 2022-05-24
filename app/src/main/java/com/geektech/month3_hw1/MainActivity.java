@@ -40,37 +40,30 @@ public class MainActivity extends AppCompatActivity {
         btnCall = findViewById(R.id.btn_call);
 
 
-        btnNextScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent nextScreenIntent = new Intent(MainActivity.this,SecondActivity.class);
-                String valueFromEdittext = etValue.getText().toString();
-                nextScreenIntent.putExtra("value", valueFromEdittext);
-                startActivity(nextScreenIntent);
+        btnNextScreen.setOnClickListener(view -> {
+            Intent nextScreenIntent = new Intent(MainActivity.this,SecondActivity.class);
+            String valueFromEdittext = etValue.getText().toString();
+            nextScreenIntent.putExtra("value", valueFromEdittext);
+            startActivity(nextScreenIntent);
 
-            }
         });
 
-        btnCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String number = etValue.getText().toString();
-                if (number.trim().length() > 0) {
+        btnCall.setOnClickListener(view -> {
+            String number = etValue.getText().toString();
+            if (number.trim().length() > 0) {
 
-                    if (ContextCompat.checkSelfPermission(MainActivity.this,
-                            Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.CALL_PHONE}, 12);
-                    } else {
-                        String dial = "tel:" + number;
-                        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
-                    }
-
+                if (ContextCompat.checkSelfPermission(MainActivity.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE}, 12);
                 } else {
-                    Toast.makeText(MainActivity.this, "Enter Phone Number", Toast.LENGTH_SHORT).show();
+                    String dial = "tel:" + number;
+                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
                 }
-            }
 
+            } else {
+                Toast.makeText(MainActivity.this, "Enter Phone Number", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
